@@ -9,5 +9,8 @@ class Player
 	def getName
 		return @name
 	end
+	def print_player
+		puts "Joueur n°#{@playerNb} - #{@name}"
+	end
 end
 		
