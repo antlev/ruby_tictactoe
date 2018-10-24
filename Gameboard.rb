@@ -39,7 +39,6 @@ class GameBoard
     		return -1
     	else
     		@board[caseNb] = player
-    		puts "Puts #{player} in case nb #{caseNb}"
     		pretty_print
     		return 0
     	end

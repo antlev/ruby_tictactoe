@@ -1,26 +1,27 @@
 
 require './Gameboard.rb'
+require './Player.rb'
 class Game
 	@gameboard = GameBoard
-	@player1
-	@player2
+	@players = []
 	@turnNb
 	@activePlayer
   def initialize
+  	system "clear"
     @gameboard = GameBoard.new
-    # setPlayers
+    setPlayers
     @turnNb = 0
     @activePlayer = 1
   end
   def setPlayers
-  	puts "Quel est le nom du joueur 1"
-  	@player1 = gets
-  	puts "Quel est le nom du joueur 2"
-  	@player2 = gets
+  	@players = Array.new(2)
+  	for i in 1..2
+  		@players[i] = Player.new(i)
+  	end
   end
 	def play
-		@gameboard.pretty_print
-		while (winner = @gameboard.finish) == 0
+		while (winner = @gameboard.finish) == 0			
+			pretty_print
 			newturn
 			if @turnNb == 9
 				if (winner = @gameboard.finish) == 0
@@ -32,6 +33,20 @@ class Game
 			end
 		end		
 	end
+	def startup_print
+		puts "C'est parti !"
+		print_player
+		@gameboard.pretty_print
+	end		
+	def pretty_print
+		
+		system "clear"
+		print_player
+		@gameboard.pretty_print
+	end
+	def print_player
+		puts "Tour numéro #{@turnNb+1} - Joueur #{@activePlayer} (#{@players[@activePlayer].getName}) a vous de jouer"
+	end
 	def newturn
 		@turnNb = @turnNb + 1
 		loop do
@@ -40,7 +55,6 @@ class Game
 		@activePlayer = (@activePlayer % 2) + 1			
 	end
 	def askPlayer(playerNb)
-		puts "Joueur #{playerNb} a vous de jouer"
 		return gets.to_i
 	end
 end
